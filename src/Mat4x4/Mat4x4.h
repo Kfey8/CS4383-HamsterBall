@@ -1,5 +1,8 @@
 #ifndef MATRIX_4x4_H
 #define MATRIX_4x4_H
+#include <cassert>
+
+
 
 class Mat4x4{
     public:
@@ -15,19 +18,26 @@ class Mat4x4{
         float& operator()(const int& row, const int& col);
         friend Mat4x4 operator*(const Mat4x4& LHS, const Mat4x4& RHS);
         friend Mat4x4 operator*(const float& scalarAmp, const Mat4x4& RHS);
-        friend Mat4x4 operator*(const Mat4x4& LHS, const float& scalarAmp);
+        friend Mat4x4 operator*(const Mat4x4& RHS, const float& scalarAmp); //Make sure the matrix multiplication is communative.  
         friend Mat4x4 operator+(const Mat4x4& LHS, const Mat4x4& RHS); 
 
-        inline Mat4x4 transposeMat();
-        inline Mat4x4 identityMat();
+        Mat4x4 transposeMat();
+        Mat4x4 identityMat();
         //To do: Translate, Scale, Shear and Rotate Transforms (+ Perspective matricies, but this is what they are essentially)
         // + Inline F'ns for determinant and invert?
-	    inline float determinant();
-        inline Mat4x4 invertMat();
+        float determinant();
+        Mat4x4 invertMat();
+        
+        Mat4x4 translateMat(float Tx, float Ty, float Tz);
+        Mat4x4 rotX(float degrees);
+        Mat4x4 rotY(float degrees);
+        Mat4x4 rotZ(float degrees);
+
+        Mat4x4 shearMat();
+        Mat4x4 scaleMat(float Sx, float Sy, float Sz);
 
 
 };
-
 
 inline Mat4x4 Mat4x4::transposeMat(){
     Mat4x4 newMat = Mat4x4();
